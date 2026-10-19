@@ -1,11 +1,17 @@
 def copy_file(command: str) -> None:
     parts = command.split()
-    file_name = parts[1]
-    new_file_name = parts[2]
 
-    if file_name == new_file_name:
+    if len(parts) != 3 or parts[0] != "cp":
         return
 
-    with open(file_name, "r") as file_in, open(new_file_name, "w") as file_out:
-        file_out.write(file_in.read())
+    source, target = parts[1], parts[2]
+
+    if source == target:
+        return
+
+    try:
+        with open(source, "r") as file_in, open(target, "w") as file_out:
+            file_out.write(file_in.read())
+    except FileNotFoundError:
+        return
 # write your code here
